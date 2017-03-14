@@ -112,5 +112,7 @@ winner = sorted(host_set, key=lambda x: (hosts[x][0], hosts[x][1]),
  # print '%s\t%s\t%s' % (args.file, host, hosts[host][1])
 
 ##print '%s\t%s\t%s' % (accnname, winner, hosts[winner][1])
-print '%s\t%s\t%s' % (args.file, winner, hosts[winner][1])
+input = args.file
+
+print '%s\t%s\t%s' % (input.replace("_pred_16mers_evalue0.05_host_sorted",""), winner, hosts[winner][1])
 #print '%s\t%s' % (args.file, winner)

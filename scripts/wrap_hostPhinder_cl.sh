@@ -30,25 +30,23 @@ declare -A meas2col=(
 )
 
 col_dec=${meas2col["$decision"]}
-workdir="/home/projects/pr_phage/people/juliav"
-outdir="$workdir/$outdir"
+workdir=`pwd`
 #mkdir -p $outdir
-#output_file="${outdir}_${kmersize}_${taxonomy}_first_${decision}_evalue$evalue"
 
 
 if [ $taxonomy = species ]
 then
     meta="$workdir/meta_1871_species_150506.tab"    
-    database="$workdir/HostPhinder/database/accnwhost1871.list_step1_kmer16_thres1.0_db"
+    database="$workdir/database/accnwhost1871.list_step1_kmer16_thres1.0_db"
 elif [ $taxonomy = genus ]
 then
     meta="$workdir/meta_2196_genus_150506.tab"
-    database="$workdir/HostPhinder/database/accnwhost2196.list_step1_kmer16_thres1.0_db"
+    database="$workdir/database/accnwhost2196.list_step1_kmer16_thres1.0_db"
 fi
 #------------------------ Find templates in database with match ---------------
 findtempl_out="$outdir/${input##*/}_${taxonomy}_pred_${kmersize}mers_evalue$evalue"
 
-python $workdir/HostPhinder/scripts/findtemplate_scipy.py -t $database -p\
+python $workdir/scripts/findtemplate_scipy.py -t $database -p\
  -k $kmersize -o $findtempl_out -i $input -e $evalue
 
 # If a prediction has been made --> more than one line (header +..)
@@ -76,9 +74,13 @@ then
     rm $predWhost
 
 #------------------------------ Alpha method (=6) ------------------------------
-    alpha_out=`$workdir/HostPhinder/scripts/get_host_alpha.py -f $sort_output -d coverage -a 6.0 -c FALSE`
+    alpha_out=`$workdir/scripts/get_host_alpha.py -f $sort_output -d coverage -a 6.0 -c FALSE`
+    echo -e "Input\tPrediction\tCoverage"
     echo $alpha_out
+    rm $sort_output
 else
     echo -e "$input\tNo_significant_match_found"
 
 fi
+
+rm $findtempl_out 

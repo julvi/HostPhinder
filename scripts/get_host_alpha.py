@@ -60,7 +60,7 @@ if args.clustering == 'TRUE':
     #---------------------------------------------------------------------------
     # Cluster similar phages
     #---------------------------------------------------------------------------
-    links = open('/home/projects/pr_phage/people/juliav/HostPhinder/skipped_16mers_0.7.list', 'r')
+    links = open('skipped_16mers_0.7.list', 'r')
 
     # Use the kept genome as key and append the skipped ones in the corresponding
     # value list.
